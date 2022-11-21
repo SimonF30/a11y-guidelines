@@ -10,7 +10,7 @@ module.exports = {
       label: 'Skip links'
     },
     lastUpdate: {
-      label : "Updated on"
+      label : "Updated onn"
     },
     navigation: {
       main: {
