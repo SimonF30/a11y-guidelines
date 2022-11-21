@@ -1,6 +1,5 @@
 {% extends "../layouts/base.njk" %}
 {% import "../components/ui.njk" as ui with context %}
-
 {% block content %}
   {% set leftColumnShouldBeVisible = sideNavigationLinks or leftColumn.display == true %}
   {%- if displayToc == true or leftColumnShouldBeVisible -%}
@@ -24,22 +23,26 @@
         {% endif %}
         <main id="main-content" class="col-md-{{ mainContentColumn }}" role="main">
           {% if titleBeforeTag %}
-            <h1>{{ title }}</h1>  
+            <h1>{{ title }}</h1>
             {% if tags %}
               <span class="visually-hidden" id="filters_label">
-                {{'tags.list' | translate}}
+                {{ 'tags.list' | translate }}
               </span>
               <ul class="list-inline mb-1" aria-labelledby="filters_label">
-              {%- for tag in tags -%}
-                {%- set tagTranslationKey = 'tags.' + tag -%}
-                <li class="list-inline-item"><a href="../?tag={{ tag }}" class="btn btn-dark btn-sm" data-tag="{{ tag }}">{{ tagTranslationKey | translate }}</a></li>
-              {% endfor -%}
+                {%- for tag in tags -%}
+                  {%- set tagTranslationKey = 'tags.' + tag -%}
+                  <li class="list-inline-item">
+                    <a href="../?tag={{ tag }}" class="btn btn-dark btn-sm" data-tag="{{ tag }}">{{ tagTranslationKey | translate }}</a>
+                  </li>
+                {% endfor -%}
               </ul>
             {% endif %}
-            <time class="text-muted" datetime="{{ page.date.toISOString() }}">{% localizedDate page.date, locale  %}</time>
-          {% endif %}  
+          {% endif %}
+          <p class="text-muted">{{ 'lastUpdate.label' | translate }}
+              <time datetime="{{ page.date.toISOString() }}">{% localizedDate page.date, locale %}</time>
+            </p>
           <div class="mt-4">
-          {{ content | safe }}
+            {{ content | safe }}
           </div>
         </main>
         {% if displayToc == true %}
@@ -53,6 +56,9 @@
     </div>
   {%- else -%}
     <main id="main-content" class="container-lg pt-4" role="main">
+        <p class="text-muted">{{ 'lastUpdate.label' | translate }}
+          <time datetime="{{ page.date.toISOString() }}">{% localizedDate page.date, locale %}</time>
+        </p>
       {{ content | safe }}
     </main>
   {%- endif -%}
